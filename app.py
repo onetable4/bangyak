@@ -361,8 +361,18 @@ with tab3:
 
             tc1, tc2 = st.columns(2)
             with tc1:
-                sim_display = sub_sim.rename(index=dict(zip(selected_ids, labels)),
-                                             columns=dict(zip(selected_ids, labels))).round(3)
+                # 동명 처방 대비 고유 레이블 (처방명 중복 시 ID 병기)
+                seen = {}
+                unique_labels = []
+                for fid, lbl in zip(selected_ids, labels):
+                    if labels.count(lbl) > 1:
+                        unique_labels.append(f"{lbl}({fid})")
+                    else:
+                        unique_labels.append(lbl)
+                sim_display = sub_sim.copy()
+                sim_display.index = unique_labels
+                sim_display.columns = unique_labels
+                sim_display = sim_display.round(3)
                 st.markdown('**유사도 수치표**')
                 st.dataframe(sim_display, width='stretch',
                              height=35 * (n + 1) + 10)
