@@ -1,0 +1,359 @@
+[
+  {
+    "herb_id": "H_001",
+    "name_kr": "마황",
+    "name_cn": "麻黃",
+    "name_latin": "Ephedrae Herba",
+    "name_common": "Ephedra sinica Stapf",
+    "category": "해표약-발산풍한약",
+    "properties": {
+      "nature": "온(溫)",
+      "flavors": ["신(辛)", "미고(微苦)"],
+      "meridians": ["폐(肺)", "방광(膀胱)"]
+    },
+    "functions": ["발한해표", "선폐평천", "이수소종"],
+    "typical_dose": {"min_g": 3, "max_g": 10},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_002"]},
+    "cautions": ["체허자한자 주의", "고혈압, 심장질환 주의"]
+  },
+  {
+    "herb_id": "H_002",
+    "name_kr": "계지",
+    "name_cn": "桂枝",
+    "name_latin": "Cinnamomi Ramulus",
+    "name_common": "Cinnamomum cassia Blume",
+    "category": "해표약-발산풍한약",
+    "properties": {
+      "nature": "온(溫)",
+      "flavors": ["신(辛)", "감(甘)"],
+      "meridians": ["심(心)", "폐(肺)", "방광(膀胱)"]
+    },
+    "functions": ["발한해기", "온경통맥", "통양화기"],
+    "typical_dose": {"min_g": 3, "max_g": 10},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_005"]},
+    "cautions": ["온열병 금기", "임산부 신중"]
+  },
+  {
+    "herb_id": "H_003",
+    "name_kr": "행인",
+    "name_cn": "杏仁",
+    "name_latin": "Armeniacae Semen",
+    "name_common": "Prunus armeniaca L.",
+    "category": "화담지해평천약-지해평천약",
+    "properties": {
+      "nature": "온(溫)",
+      "flavors": ["고(苦)"],
+      "meridians": ["폐(肺)", "대장(大腸)"]
+    },
+    "functions": ["지해평천", "윤장통변"],
+    "typical_dose": {"min_g": 5, "max_g": 10},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": []},
+    "cautions": ["아미그달린 함유, 과량 시 독성"]
+  },
+  {
+    "herb_id": "H_004",
+    "name_kr": "자감초",
+    "name_cn": "炙甘草",
+    "name_latin": "Glycyrrhizae Radix Praeparata",
+    "name_common": "Glycyrrhiza uralensis Fisch.",
+    "category": "보익약-보기약",
+    "properties": {
+      "nature": "평(平)",
+      "flavors": ["감(甘)"],
+      "meridians": ["심(心)", "폐(肺)", "비(脾)", "위(胃)"]
+    },
+    "functions": ["보비익기", "윤폐지해", "완급지통", "조화제약"],
+    "typical_dose": {"min_g": 2, "max_g": 10},
+    "interactions": {"incompatible": ["H_028"], "antagonistic": [], "synergistic": []},
+    "cautions": ["습성창만 주의", "감수, 대극, 원화, 해조와 상반"]
+  },
+  {
+    "herb_id": "H_005",
+    "name_kr": "백작약",
+    "name_cn": "白芍藥",
+    "name_latin": "Paeoniae Radix Alba",
+    "name_common": "Paeonia lactiflora Pall.",
+    "category": "보익약-보혈약",
+    "properties": {
+      "nature": "미한(微寒)",
+      "flavors": ["고(苦)", "산(酸)"],
+      "meridians": ["간(肝)", "비(脾)"]
+    },
+    "functions": ["양혈렴음", "유간지통", "평억간양"],
+    "typical_dose": {"min_g": 6, "max_g": 15},
+    "interactions": {"incompatible": ["H_022"], "antagonistic": [], "synergistic": ["H_002"]},
+    "cautions": ["여로와 상반"]
+  },
+  {
+    "herb_id": "H_006",
+    "name_kr": "생강",
+    "name_cn": "生薑",
+    "name_latin": "Zingiberis Rhizoma Recens",
+    "name_common": "Zingiber officinale Roscoe",
+    "category": "해표약-발산풍한약",
+    "properties": {
+      "nature": "미온(微溫)",
+      "flavors": ["신(辛)"],
+      "meridians": ["폐(肺)", "비(脾)", "위(胃)"]
+    },
+    "functions": ["발산풍한", "온중지구", "온폐지해"],
+    "typical_dose": {"min_g": 3, "max_g": 10},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_007"]},
+    "cautions": ["음허내열 주의"]
+  },
+  {
+    "herb_id": "H_007",
+    "name_kr": "대조",
+    "name_cn": "大棗",
+    "name_latin": "Jujubae Fructus",
+    "name_common": "Ziziphus jujuba Mill.",
+    "category": "보익약-보기약",
+    "properties": {
+      "nature": "온(溫)",
+      "flavors": ["감(甘)"],
+      "meridians": ["비(脾)", "위(胃)"]
+    },
+    "functions": ["보중익기", "양혈안신", "완화약성"],
+    "typical_dose": {"min_g": 4, "max_g": 12},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_006"]},
+    "cautions": ["습담, 식적 주의"]
+  },
+  {
+    "herb_id": "H_008",
+    "name_kr": "시호",
+    "name_cn": "柴胡",
+    "name_latin": "Bupleuri Radix",
+    "name_common": "Bupleurum chinense DC.",
+    "category": "해표약-발산풍열약",
+    "properties": {
+      "nature": "미한(微寒)",
+      "flavors": ["고(苦)", "신(辛)"],
+      "meridians": ["간(肝)", "담(膽)"]
+    },
+    "functions": ["화해퇴열", "소간해울", "승거양기"],
+    "typical_dose": {"min_g": 3, "max_g": 10},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_009"]},
+    "cautions": ["간풍내동, 간양상항 주의", "음허화왕 주의"]
+  },
+  {
+    "herb_id": "H_009",
+    "name_kr": "황금",
+    "name_cn": "黃芩",
+    "name_latin": "Scutellariae Radix",
+    "name_common": "Scutellaria baicalensis Georgi",
+    "category": "청열약-청열조습약",
+    "properties": {
+      "nature": "한(寒)",
+      "flavors": ["고(苦)"],
+      "meridians": ["폐(肺)", "담(膽)", "비(脾)", "대장(大腸)", "소장(小腸)"]
+    },
+    "functions": ["청열조습", "사화해독", "지혈", "안태"],
+    "typical_dose": {"min_g": 3, "max_g": 10},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_008"]},
+    "cautions": ["비위허한 주의"]
+  },
+  {
+    "herb_id": "H_010",
+    "name_kr": "반하",
+    "name_cn": "半夏",
+    "name_latin": "Pinelliae Tuber",
+    "name_common": "Pinellia ternata (Thunb.) Breit.",
+    "category": "화담지해평천약-온화한담약",
+    "properties": {
+      "nature": "온(溫)",
+      "flavors": ["신(辛)"],
+      "meridians": ["비(脾)", "위(胃)", "폐(肺)"]
+    },
+    "functions": ["조습화담", "강역지구", "소비산결"],
+    "typical_dose": {"min_g": 5, "max_g": 12},
+    "interactions": {"incompatible": ["H_021"], "antagonistic": [], "synergistic": []},
+    "cautions": ["음허조해 금기", "생용 독성 주의", "오두와 상반"]
+  },
+  {
+    "herb_id": "H_011",
+    "name_kr": "인삼",
+    "name_cn": "人蔘",
+    "name_latin": "Ginseng Radix",
+    "name_common": "Panax ginseng C.A.Mey.",
+    "category": "보익약-보기약",
+    "properties": {
+      "nature": "미온(微溫)",
+      "flavors": ["감(甘)", "미고(微苦)"],
+      "meridians": ["비(脾)", "폐(肺)", "심(心)"]
+    },
+    "functions": ["대보원기", "보비익폐", "생진지갈", "안신익지"],
+    "typical_dose": {"min_g": 3, "max_g": 10},
+    "interactions": {"incompatible": ["H_022"], "antagonistic": [], "synergistic": []},
+    "cautions": ["실열증 금기", "여로와 상반"]
+  },
+  {
+    "herb_id": "H_012",
+    "name_kr": "석고",
+    "name_cn": "石膏",
+    "name_latin": "Gypsum Fibrosum",
+    "name_common": "CaSO4·2H2O",
+    "category": "청열약-청열사화약",
+    "properties": {
+      "nature": "대한(大寒)",
+      "flavors": ["신(辛)", "감(甘)"],
+      "meridians": ["폐(肺)", "위(胃)"]
+    },
+    "functions": ["청열사화", "제번지갈"],
+    "typical_dose": {"min_g": 15, "max_g": 60},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_018"]},
+    "cautions": ["비위허한 금기", "음허발열 부적합"]
+  },
+  {
+    "herb_id": "H_013",
+    "name_kr": "갈근",
+    "name_cn": "葛根",
+    "name_latin": "Puerariae Radix",
+    "name_common": "Pueraria lobata (Willd.) Ohwi",
+    "category": "해표약-발산풍열약",
+    "properties": {
+      "nature": "량(涼)",
+      "flavors": ["감(甘)", "신(辛)"],
+      "meridians": ["비(脾)", "위(胃)"]
+    },
+    "functions": ["해기퇴열", "생진지갈", "투진", "승양지사"],
+    "typical_dose": {"min_g": 10, "max_g": 20},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": []},
+    "cautions": ["다한 주의"]
+  },
+  {
+    "herb_id": "H_014",
+    "name_kr": "저령",
+    "name_cn": "豬苓",
+    "name_latin": "Polyporus",
+    "name_common": "Polyporus umbellatus (Pers.) Fries",
+    "category": "이수삼습약",
+    "properties": {
+      "nature": "평(平)",
+      "flavors": ["감(甘)", "담(淡)"],
+      "meridians": ["신(腎)", "방광(膀胱)"]
+    },
+    "functions": ["이수삼습"],
+    "typical_dose": {"min_g": 6, "max_g": 12},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_017"]},
+    "cautions": ["무수습 불용"]
+  },
+  {
+    "herb_id": "H_015",
+    "name_kr": "택사",
+    "name_cn": "澤瀉",
+    "name_latin": "Alismatis Rhizoma",
+    "name_common": "Alisma orientale (Sam.) Juzep.",
+    "category": "이수삼습약",
+    "properties": {
+      "nature": "한(寒)",
+      "flavors": ["감(甘)", "담(淡)"],
+      "meridians": ["신(腎)", "방광(膀胱)"]
+    },
+    "functions": ["이수삼습", "설열"],
+    "typical_dose": {"min_g": 6, "max_g": 15},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_014"]},
+    "cautions": ["신허정활 주의"]
+  },
+  {
+    "herb_id": "H_016",
+    "name_kr": "백출",
+    "name_cn": "白朮",
+    "name_latin": "Atractylodis Macrocephalae Rhizoma",
+    "name_common": "Atractylodes macrocephala Koidz.",
+    "category": "보익약-보기약",
+    "properties": {
+      "nature": "온(溫)",
+      "flavors": ["고(苦)", "감(甘)"],
+      "meridians": ["비(脾)", "위(胃)"]
+    },
+    "functions": ["건비익기", "조습이수", "고표지한", "안태"],
+    "typical_dose": {"min_g": 6, "max_g": 12},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_017"]},
+    "cautions": ["음허조갈 주의"]
+  },
+  {
+    "herb_id": "H_017",
+    "name_kr": "복령",
+    "name_cn": "茯苓",
+    "name_latin": "Poria",
+    "name_common": "Poria cocos (Schw.) Wolf",
+    "category": "이수삼습약",
+    "properties": {
+      "nature": "평(平)",
+      "flavors": ["감(甘)", "담(淡)"],
+      "meridians": ["심(心)", "비(脾)", "신(腎)"]
+    },
+    "functions": ["이수삼습", "건비", "영심안신"],
+    "typical_dose": {"min_g": 10, "max_g": 15},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_016"]},
+    "cautions": ["허한활정 주의"]
+  },
+  {
+    "herb_id": "H_018",
+    "name_kr": "지모",
+    "name_cn": "知母",
+    "name_latin": "Anemarrhenae Rhizoma",
+    "name_common": "Anemarrhena asphodeloides Bge.",
+    "category": "청열약-청열사화약",
+    "properties": {
+      "nature": "한(寒)",
+      "flavors": ["고(苦)", "감(甘)"],
+      "meridians": ["폐(肺)", "위(胃)", "신(腎)"]
+    },
+    "functions": ["청열사화", "자음윤조"],
+    "typical_dose": {"min_g": 6, "max_g": 12},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_012"]},
+    "cautions": ["비위허한 설사 주의"]
+  },
+  {
+    "herb_id": "H_019",
+    "name_kr": "갱미",
+    "name_cn": "粳米",
+    "name_latin": "Oryzae Semen",
+    "name_common": "Oryza sativa L.",
+    "category": "보익약-보기약",
+    "properties": {
+      "nature": "평(平)",
+      "flavors": ["감(甘)"],
+      "meridians": ["비(脾)", "위(胃)"]
+    },
+    "functions": ["보중익기", "건비화위"],
+    "typical_dose": {"min_g": 10, "max_g": 30},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": []},
+    "cautions": []
+  },
+  {
+    "herb_id": "H_020",
+    "name_kr": "건강",
+    "name_cn": "乾薑",
+    "name_latin": "Zingiberis Rhizoma",
+    "name_common": "Zingiber officinale Roscoe (dried)",
+    "category": "온리약",
+    "properties": {
+      "nature": "열(熱)",
+      "flavors": ["신(辛)"],
+      "meridians": ["비(脾)", "위(胃)", "심(心)", "폐(肺)"]
+    },
+    "functions": ["온중산한", "회양통맥", "온폐화음"],
+    "typical_dose": {"min_g": 3, "max_g": 10},
+    "interactions": {"incompatible": [], "antagonistic": [], "synergistic": ["H_021"]},
+    "cautions": ["음허내열 금기", "임산부 신중"]
+  },
+  {
+    "herb_id": "H_021",
+    "name_kr": "부자",
+    "name_cn": "附子",
+    "name_latin": "Aconiti Lateralis Radix Praeparata",
+    "name_common": "Aconitum carmichaelii Debx.",
+    "category": "온리약",
+    "properties": {
+      "nature": "대열(大熱)",
+      "flavors": ["신(辛)", "감(甘)"],
+      "meridians": ["심(心)", "신(腎)", "비(脾)"]
+    },
+    "functions": ["회양구역", "보화조양", "산한지통"],
+    "typical_dose": {"min_g": 3, "max_g": 15},
+    "interactions": {"incompatible": ["H_010"], "antagonistic": [], "synergistic": ["H_020"]},
+    "cautions": ["독성 강함, 반드시 포제", "반하, 과루, 패모, 백급, 백렴과 상반", "임산부 금기"]
+  }
+]

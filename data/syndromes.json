@@ -1,0 +1,250 @@
+[
+  {
+    "syndrome_id": "SYN_001",
+    "name_kr": "태양병 상한증",
+    "name_cn": "太陽病 傷寒證",
+    "system": "육경변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_001", "name_kr": "오한", "weight": 1.5},
+        {"symptom_id": "SX_002", "name_kr": "발열", "weight": 1.0},
+        {"symptom_id": "SX_003", "name_kr": "무한", "weight": 1.5},
+        {"symptom_id": "SX_004", "name_kr": "두통", "weight": 1.0},
+        {"symptom_id": "SX_005", "name_kr": "신체통", "weight": 1.2}
+      ],
+      "optional": [
+        {"symptom_id": "SX_006", "name_kr": "천기", "weight": 0.8},
+        {"symptom_id": "SX_007", "name_kr": "맥부긴", "weight": 1.0},
+        {"symptom_id": "SX_008", "name_kr": "요통", "weight": 0.6},
+        {"symptom_id": "SX_009", "name_kr": "골절통", "weight": 0.7}
+      ]
+    },
+    "tongue": "설태박백",
+    "pulse": "부긴(浮緊)",
+    "primary_formulas": ["SHL_001"],
+    "secondary_formulas": ["SHL_004", "SHL_005"],
+    "differential": ["SYN_002"],
+    "notes": "핵심 감별: 무한(無汗) → 상한증, 자한(自汗) → 중풍증"
+  },
+  {
+    "syndrome_id": "SYN_002",
+    "name_kr": "태양병 중풍증",
+    "name_cn": "太陽病 中風證",
+    "system": "육경변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_002", "name_kr": "발열", "weight": 1.0},
+        {"symptom_id": "SX_010", "name_kr": "오풍", "weight": 1.5},
+        {"symptom_id": "SX_011", "name_kr": "자한", "weight": 1.5},
+        {"symptom_id": "SX_004", "name_kr": "두통", "weight": 1.0}
+      ],
+      "optional": [
+        {"symptom_id": "SX_012", "name_kr": "비색", "weight": 0.7},
+        {"symptom_id": "SX_013", "name_kr": "맥부완", "weight": 1.0},
+        {"symptom_id": "SX_014", "name_kr": "구역", "weight": 0.5}
+      ]
+    },
+    "tongue": "설태박백",
+    "pulse": "부완(浮緩)",
+    "primary_formulas": ["SHL_002"],
+    "secondary_formulas": ["SHL_005"],
+    "differential": ["SYN_001"],
+    "notes": "핵심 감별: 자한(自汗) + 오풍 → 중풍증"
+  },
+  {
+    "syndrome_id": "SYN_003",
+    "name_kr": "소양병증",
+    "name_cn": "少陽病證",
+    "system": "육경변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_015", "name_kr": "왕래한열", "weight": 1.5},
+        {"symptom_id": "SX_016", "name_kr": "흉협고만", "weight": 1.3},
+        {"symptom_id": "SX_017", "name_kr": "묵묵불욕음식", "weight": 1.0},
+        {"symptom_id": "SX_018", "name_kr": "심번희구", "weight": 1.0}
+      ],
+      "optional": [
+        {"symptom_id": "SX_019", "name_kr": "구고", "weight": 0.8},
+        {"symptom_id": "SX_020", "name_kr": "인건", "weight": 0.7},
+        {"symptom_id": "SX_021", "name_kr": "목현", "weight": 0.7},
+        {"symptom_id": "SX_022", "name_kr": "맥현", "weight": 1.0}
+      ]
+    },
+    "tongue": "설태박백 또는 미황",
+    "pulse": "현(弦)",
+    "primary_formulas": ["SHL_003"],
+    "secondary_formulas": [],
+    "differential": ["SYN_001", "SYN_008"],
+    "notes": "소양병 제강: 구고, 인건, 목현"
+  },
+  {
+    "syndrome_id": "SYN_004",
+    "name_kr": "태양병 표한리열증",
+    "name_cn": "太陽病 表寒裏熱證",
+    "system": "육경변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_002", "name_kr": "발열", "weight": 1.2},
+        {"symptom_id": "SX_001", "name_kr": "오한", "weight": 1.0},
+        {"symptom_id": "SX_005", "name_kr": "신체통", "weight": 1.0},
+        {"symptom_id": "SX_003", "name_kr": "무한", "weight": 1.0},
+        {"symptom_id": "SX_023", "name_kr": "번조", "weight": 1.5}
+      ],
+      "optional": [
+        {"symptom_id": "SX_007", "name_kr": "맥부긴", "weight": 0.8}
+      ]
+    },
+    "tongue": "설태백",
+    "pulse": "부긴(浮緊)",
+    "primary_formulas": ["SHL_004"],
+    "secondary_formulas": [],
+    "differential": ["SYN_001"],
+    "notes": "마황탕증 + 번조 → 이열 겸. 대청룡탕증."
+  },
+  {
+    "syndrome_id": "SYN_005",
+    "name_kr": "태양병 경항강급증",
+    "name_cn": "太陽病 項背強几几證",
+    "system": "육경변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_004", "name_kr": "두통", "weight": 1.0},
+        {"symptom_id": "SX_002", "name_kr": "발열", "weight": 1.0},
+        {"symptom_id": "SX_001", "name_kr": "오한", "weight": 1.0},
+        {"symptom_id": "SX_024", "name_kr": "항강", "weight": 1.8},
+        {"symptom_id": "SX_003", "name_kr": "무한", "weight": 1.0}
+      ],
+      "optional": [
+        {"symptom_id": "SX_025", "name_kr": "맥부", "weight": 0.8}
+      ]
+    },
+    "tongue": "설태박백",
+    "pulse": "부(浮)",
+    "primary_formulas": ["SHL_005"],
+    "secondary_formulas": [],
+    "differential": ["SYN_001", "SYN_002"],
+    "notes": "태양병 + 항강(뒷목 경직)이 핵심. 갈근탕증."
+  },
+  {
+    "syndrome_id": "SYN_006",
+    "name_kr": "폐열옹성증",
+    "name_cn": "肺熱壅盛證",
+    "system": "장부변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_002", "name_kr": "발열", "weight": 1.2},
+        {"symptom_id": "SX_006", "name_kr": "천기", "weight": 1.5},
+        {"symptom_id": "SX_011", "name_kr": "자한", "weight": 0.8},
+        {"symptom_id": "SX_026", "name_kr": "구갈", "weight": 1.0}
+      ],
+      "optional": [
+        {"symptom_id": "SX_027", "name_kr": "맥활삭", "weight": 1.0},
+        {"symptom_id": "SX_028", "name_kr": "해수", "weight": 0.8},
+        {"symptom_id": "SX_029", "name_kr": "담황조", "weight": 0.7}
+      ]
+    },
+    "tongue": "설홍태황",
+    "pulse": "활삭(滑數)",
+    "primary_formulas": ["SHL_006"],
+    "secondary_formulas": [],
+    "differential": ["SYN_001"],
+    "notes": "마행감석탕증. 표증 해소 후 폐열이 남은 경우."
+  },
+  {
+    "syndrome_id": "SYN_007",
+    "name_kr": "수습내정 겸 표증",
+    "name_cn": "水濕內停 兼 表證",
+    "system": "기혈진액변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_030", "name_kr": "소변불리", "weight": 1.5},
+        {"symptom_id": "SX_026", "name_kr": "구갈", "weight": 1.0},
+        {"symptom_id": "SX_031", "name_kr": "수역", "weight": 1.3}
+      ],
+      "optional": [
+        {"symptom_id": "SX_002", "name_kr": "발열", "weight": 0.6},
+        {"symptom_id": "SX_004", "name_kr": "두통", "weight": 0.5},
+        {"symptom_id": "SX_032", "name_kr": "부종", "weight": 0.8},
+        {"symptom_id": "SX_025", "name_kr": "맥부", "weight": 0.7}
+      ]
+    },
+    "tongue": "설태백활",
+    "pulse": "부(浮)",
+    "primary_formulas": ["SHL_007"],
+    "secondary_formulas": [],
+    "differential": [],
+    "notes": "오령산증. 구갈하나 물을 마시면 토하는 것(수역)이 특징."
+  },
+  {
+    "syndrome_id": "SYN_008",
+    "name_kr": "양명경증",
+    "name_cn": "陽明經證",
+    "system": "육경변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_033", "name_kr": "대열", "weight": 1.5},
+        {"symptom_id": "SX_034", "name_kr": "대한", "weight": 1.5},
+        {"symptom_id": "SX_035", "name_kr": "대갈", "weight": 1.5},
+        {"symptom_id": "SX_036", "name_kr": "맥홍대", "weight": 1.5}
+      ],
+      "optional": [
+        {"symptom_id": "SX_023", "name_kr": "번조", "weight": 0.8}
+      ]
+    },
+    "tongue": "설홍태황조",
+    "pulse": "홍대(洪大)",
+    "primary_formulas": ["SHL_008"],
+    "secondary_formulas": [],
+    "differential": ["SYN_003"],
+    "notes": "양명경증 4대증. 백호탕증. 리열치성."
+  },
+  {
+    "syndrome_id": "SYN_009",
+    "name_kr": "비위허한증",
+    "name_cn": "脾胃虛寒證",
+    "system": "장부변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_037", "name_kr": "복통", "weight": 1.3},
+        {"symptom_id": "SX_038", "name_kr": "설사", "weight": 1.2},
+        {"symptom_id": "SX_039", "name_kr": "식욕부진", "weight": 1.0}
+      ],
+      "optional": [
+        {"symptom_id": "SX_014", "name_kr": "구역", "weight": 0.7},
+        {"symptom_id": "SX_040", "name_kr": "사지불온", "weight": 0.8},
+        {"symptom_id": "SX_041", "name_kr": "맥침지", "weight": 1.0}
+      ]
+    },
+    "tongue": "설담태백",
+    "pulse": "침지(沈遲)",
+    "primary_formulas": ["SHL_009"],
+    "secondary_formulas": [],
+    "differential": ["SYN_010"],
+    "notes": "이중환/탕증. 태음병 비위허한."
+  },
+  {
+    "syndrome_id": "SYN_010",
+    "name_kr": "소음병 한화쇠미증",
+    "name_cn": "少陰病 寒化衰微證",
+    "system": "육경변증",
+    "symptoms": {
+      "required": [
+        {"symptom_id": "SX_042", "name_kr": "사지궐냉", "weight": 1.8},
+        {"symptom_id": "SX_043", "name_kr": "오한권와", "weight": 1.3},
+        {"symptom_id": "SX_044", "name_kr": "맥미욕절", "weight": 1.5}
+      ],
+      "optional": [
+        {"symptom_id": "SX_038", "name_kr": "설사", "weight": 0.8},
+        {"symptom_id": "SX_045", "name_kr": "하리청곡", "weight": 1.0},
+        {"symptom_id": "SX_046", "name_kr": "신피", "weight": 0.8},
+        {"symptom_id": "SX_047", "name_kr": "면색창백", "weight": 0.7}
+      ]
+    },
+    "tongue": "설담태백",
+    "pulse": "미(微)",
+    "primary_formulas": ["SHL_010"],
+    "secondary_formulas": ["SHL_009"],
+    "differential": ["SYN_009"],
+    "notes": "소음병 사역탕증. 양기 쇠미, 회양구역 필요."
+  }
+]

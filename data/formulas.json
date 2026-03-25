@@ -1,0 +1,232 @@
+[
+  {
+    "formula_id": "SHL_001",
+    "name_kr": "마황탕",
+    "name_cn": "麻黃湯",
+    "source": "상한론",
+    "source_clause": "제35조",
+    "composition": [
+      {"herb_id": "H_001", "name_kr": "마황", "role": "군", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_002", "name_kr": "계지", "role": "신", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_003", "name_kr": "행인", "role": "좌", "dose_g": 6, "dose_original": "七十個"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "사", "dose_g": 3, "dose_original": "一兩"}
+    ],
+    "total_dose_g": 24,
+    "indications": {
+      "syndromes": ["SYN_001"],
+      "symptoms": ["오한", "발열", "두통", "신체통", "무한", "천기", "맥부긴"],
+      "tongue": "설태박백",
+      "pulse": "부긴(浮緊)"
+    },
+    "contraindications": ["표허자한", "음허발열", "혈허"],
+    "notes": "태양병 상한증의 대표 처방. 발한력이 강하므로 체력 허약자 주의."
+  },
+  {
+    "formula_id": "SHL_002",
+    "name_kr": "계지탕",
+    "name_cn": "桂枝湯",
+    "source": "상한론",
+    "source_clause": "제12조",
+    "composition": [
+      {"herb_id": "H_002", "name_kr": "계지", "role": "군", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_005", "name_kr": "백작약", "role": "신", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "좌", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_006", "name_kr": "생강", "role": "좌", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_007", "name_kr": "대조", "role": "사", "dose_g": 6, "dose_original": "十二枚"}
+    ],
+    "total_dose_g": 39,
+    "indications": {
+      "syndromes": ["SYN_002"],
+      "symptoms": ["발열", "오풍", "두통", "자한", "비색", "맥부완"],
+      "tongue": "설태박백",
+      "pulse": "부완(浮緩)"
+    },
+    "contraindications": ["표실무한", "온병초기", "습열"],
+    "notes": "태양병 중풍증 대표 처방. 군신방법의 전범. 복약 후 열죽(粥) 섭취 권장."
+  },
+  {
+    "formula_id": "SHL_003",
+    "name_kr": "소시호탕",
+    "name_cn": "小柴胡湯",
+    "source": "상한론",
+    "source_clause": "제96조",
+    "composition": [
+      {"herb_id": "H_008", "name_kr": "시호", "role": "군", "dose_g": 24, "dose_original": "八兩"},
+      {"herb_id": "H_009", "name_kr": "황금", "role": "신", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_010", "name_kr": "반하", "role": "좌", "dose_g": 12, "dose_original": "半升"},
+      {"herb_id": "H_006", "name_kr": "생강", "role": "좌", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_011", "name_kr": "인삼", "role": "좌", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "사", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_007", "name_kr": "대조", "role": "사", "dose_g": 6, "dose_original": "十二枚"}
+    ],
+    "total_dose_g": 78,
+    "indications": {
+      "syndromes": ["SYN_003"],
+      "symptoms": ["왕래한열", "흉협고만", "묵묵불욕음식", "심번희구", "구고", "인건", "목현"],
+      "tongue": "설태박백",
+      "pulse": "현(弦)"
+    },
+    "contraindications": ["음허혈소", "간양상항"],
+    "notes": "소양병 대표 처방. 화해법의 대표. 시호 용량이 가장 큼에 주의."
+  },
+  {
+    "formula_id": "SHL_004",
+    "name_kr": "대청룡탕",
+    "name_cn": "大靑龍湯",
+    "source": "상한론",
+    "source_clause": "제38조",
+    "composition": [
+      {"herb_id": "H_001", "name_kr": "마황", "role": "군", "dose_g": 18, "dose_original": "六兩"},
+      {"herb_id": "H_002", "name_kr": "계지", "role": "신", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "좌", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_003", "name_kr": "행인", "role": "좌", "dose_g": 6, "dose_original": "四十枚"},
+      {"herb_id": "H_006", "name_kr": "생강", "role": "좌", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_007", "name_kr": "대조", "role": "좌", "dose_g": 6, "dose_original": "十枚"},
+      {"herb_id": "H_012", "name_kr": "석고", "role": "신", "dose_g": 24, "dose_original": "如鷄子大"}
+    ],
+    "total_dose_g": 75,
+    "indications": {
+      "syndromes": ["SYN_004"],
+      "symptoms": ["발열", "오한", "신체통", "무한", "번조"],
+      "tongue": "설태백",
+      "pulse": "부긴(浮緊)"
+    },
+    "contraindications": ["허약", "자한", "맥미약"],
+    "notes": "마황탕 + 석고. 표한리열 겸증. 발한력 극강, 오용 시 위험."
+  },
+  {
+    "formula_id": "SHL_005",
+    "name_kr": "갈근탕",
+    "name_cn": "葛根湯",
+    "source": "상한론",
+    "source_clause": "제31조",
+    "composition": [
+      {"herb_id": "H_013", "name_kr": "갈근", "role": "군", "dose_g": 12, "dose_original": "四兩"},
+      {"herb_id": "H_001", "name_kr": "마황", "role": "신", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_002", "name_kr": "계지", "role": "좌", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_005", "name_kr": "백작약", "role": "좌", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_006", "name_kr": "생강", "role": "좌", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_007", "name_kr": "대조", "role": "사", "dose_g": 6, "dose_original": "十二枚"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "사", "dose_g": 6, "dose_original": "二兩"}
+    ],
+    "total_dose_g": 54,
+    "indications": {
+      "syndromes": ["SYN_005"],
+      "symptoms": ["두통", "발열", "오한", "항강", "무한", "맥부"],
+      "tongue": "설태박백",
+      "pulse": "부(浮)"
+    },
+    "contraindications": ["표허자한"],
+    "notes": "태양병 경항강급증. 계지탕에 갈근+마황 추가. 현대 감기/경추 질환 다용."
+  },
+  {
+    "formula_id": "SHL_006",
+    "name_kr": "마황행인감초석고탕",
+    "name_cn": "麻黃杏仁甘草石膏湯",
+    "source": "상한론",
+    "source_clause": "제63조",
+    "composition": [
+      {"herb_id": "H_001", "name_kr": "마황", "role": "군", "dose_g": 12, "dose_original": "四兩"},
+      {"herb_id": "H_003", "name_kr": "행인", "role": "신", "dose_g": 8, "dose_original": "五十個"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "사", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_012", "name_kr": "석고", "role": "신", "dose_g": 24, "dose_original": "半斤"}
+    ],
+    "total_dose_g": 50,
+    "indications": {
+      "syndromes": ["SYN_006"],
+      "symptoms": ["발열", "천기", "한출", "구갈", "맥활삭"],
+      "tongue": "설홍태황",
+      "pulse": "활삭(滑數)"
+    },
+    "contraindications": ["풍한표증"],
+    "notes": "폐열옹성의 대표 처방. 마황탕에서 계지 빼고 석고 추가. 선폐청열."
+  },
+  {
+    "formula_id": "SHL_007",
+    "name_kr": "오령산",
+    "name_cn": "五苓散",
+    "source": "상한론",
+    "source_clause": "제71조",
+    "composition": [
+      {"herb_id": "H_014", "name_kr": "저령", "role": "군", "dose_g": 9, "dose_original": "十八銖"},
+      {"herb_id": "H_015", "name_kr": "택사", "role": "군", "dose_g": 15, "dose_original": "一兩六銖"},
+      {"herb_id": "H_016", "name_kr": "백출", "role": "신", "dose_g": 9, "dose_original": "十八銖"},
+      {"herb_id": "H_017", "name_kr": "복령", "role": "신", "dose_g": 9, "dose_original": "十八銖"},
+      {"herb_id": "H_002", "name_kr": "계지", "role": "좌", "dose_g": 6, "dose_original": "半兩"}
+    ],
+    "total_dose_g": 48,
+    "indications": {
+      "syndromes": ["SYN_007"],
+      "symptoms": ["소변불리", "구갈", "수역", "부종", "두통", "발열"],
+      "tongue": "설태백활",
+      "pulse": "부(浮)"
+    },
+    "contraindications": ["음허소변불리"],
+    "notes": "축수통양의 대표 처방. 수습 정체 겸 표증."
+  },
+  {
+    "formula_id": "SHL_008",
+    "name_kr": "백호탕",
+    "name_cn": "白虎湯",
+    "source": "상한론",
+    "source_clause": "제176조",
+    "composition": [
+      {"herb_id": "H_012", "name_kr": "석고", "role": "군", "dose_g": 50, "dose_original": "一斤"},
+      {"herb_id": "H_018", "name_kr": "지모", "role": "신", "dose_g": 18, "dose_original": "六兩"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "좌", "dose_g": 6, "dose_original": "二兩"},
+      {"herb_id": "H_019", "name_kr": "갱미", "role": "사", "dose_g": 18, "dose_original": "六合"}
+    ],
+    "total_dose_g": 92,
+    "indications": {
+      "syndromes": ["SYN_008"],
+      "symptoms": ["대열", "대한", "대갈", "맥홍대"],
+      "tongue": "설홍태황조",
+      "pulse": "홍대(洪大)"
+    },
+    "contraindications": ["표증미해", "혈허발열", "진한가열"],
+    "notes": "양명경증 대표 처방. 4대증(대열, 대한, 대갈, 맥홍대). 청열생진."
+  },
+  {
+    "formula_id": "SHL_009",
+    "name_kr": "이중환",
+    "name_cn": "理中丸",
+    "source": "상한론",
+    "source_clause": "제386조",
+    "composition": [
+      {"herb_id": "H_011", "name_kr": "인삼", "role": "군", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_020", "name_kr": "건강", "role": "신", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "좌", "dose_g": 9, "dose_original": "三兩"},
+      {"herb_id": "H_016", "name_kr": "백출", "role": "좌", "dose_g": 9, "dose_original": "三兩"}
+    ],
+    "total_dose_g": 36,
+    "indications": {
+      "syndromes": ["SYN_009"],
+      "symptoms": ["복통", "설사", "구토", "식욕부진", "사지불온", "맥침지"],
+      "tongue": "설담태백",
+      "pulse": "침지(沈遲)"
+    },
+    "contraindications": ["실열증", "음허발열"],
+    "notes": "태음병 대표 처방. 비위허한 온중건비."
+  },
+  {
+    "formula_id": "SHL_010",
+    "name_kr": "사역탕",
+    "name_cn": "四逆湯",
+    "source": "상한론",
+    "source_clause": "제323조",
+    "composition": [
+      {"herb_id": "H_021", "name_kr": "부자", "role": "군", "dose_g": 9, "dose_original": "一枚"},
+      {"herb_id": "H_020", "name_kr": "건강", "role": "신", "dose_g": 5, "dose_original": "一兩半"},
+      {"herb_id": "H_004", "name_kr": "자감초", "role": "좌", "dose_g": 6, "dose_original": "二兩"}
+    ],
+    "total_dose_g": 20,
+    "indications": {
+      "syndromes": ["SYN_010"],
+      "symptoms": ["사지궐냉", "오한권와", "하리청곡", "맥미욕절", "신피"],
+      "tongue": "설담태백",
+      "pulse": "미(微)"
+    },
+    "contraindications": ["열증", "진음부족", "임산부"],
+    "notes": "소음병 대표 처방. 회양구역. 부자-건강 배합이 핵심."
+  }
+]
