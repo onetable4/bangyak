@@ -15,11 +15,21 @@ import matplotlib.font_manager as fm
 from sklearn.preprocessing import normalize
 import streamlit as st
 
-# ── 한글 폰트
-for _fname in fm.findSystemFonts():
-    if any(k in _fname for k in ['Malgun', 'malgun', 'NanumGothic', 'AppleGothic']):
-        matplotlib.rc('font', family=fm.FontProperties(fname=_fname).get_name())
-        break
+# ── 한글 폰트 (Windows: Malgun, Linux: NanumGothic, macOS: AppleGothic)
+def _set_korean_font():
+    keywords = ['Malgun', 'malgun', 'NanumGothic', 'Nanum', 'AppleGothic']
+    for _fname in fm.findSystemFonts():
+        if any(k in _fname for k in keywords):
+            matplotlib.rc('font', family=fm.FontProperties(fname=_fname).get_name())
+            return
+    # fallback: matplotlib 폰트 캐시 갱신 후 재시도 (Linux apt 설치 직후 대응)
+    fm.fontManager.__init__()
+    for _fname in fm.findSystemFonts():
+        if any(k in _fname for k in keywords):
+            matplotlib.rc('font', family=fm.FontProperties(fname=_fname).get_name())
+            return
+
+_set_korean_font()
 matplotlib.rcParams['axes.unicode_minus'] = False
 
 BASE = Path(__file__).parent
