@@ -15,18 +15,30 @@ import matplotlib.font_manager as fm
 from sklearn.preprocessing import normalize
 import streamlit as st
 
-# ── 한글 폰트 (Windows: Malgun, Linux: NanumGothic, macOS: AppleGothic)
+# ── 한글 폰트
+import os
+
 def _set_korean_font():
-    keywords = ['Malgun', 'malgun', 'NanumGothic', 'Nanum', 'AppleGothic']
-    for _fname in fm.findSystemFonts():
-        if any(k in _fname for k in keywords):
-            matplotlib.rc('font', family=fm.FontProperties(fname=_fname).get_name())
+    # 1) Linux apt 설치 경로 직접 탐색
+    linux_candidates = [
+        '/usr/share/fonts/truetype/nanum/NanumGothic.ttf',
+        '/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf',
+        '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',
+        '/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc',
+    ]
+    for path in linux_candidates:
+        if os.path.exists(path):
+            fm.fontManager.addfont(path)
+            prop = fm.FontProperties(fname=path)
+            matplotlib.rc('font', family=prop.get_name())
             return
-    # fallback: matplotlib 폰트 캐시 갱신 후 재시도 (Linux apt 설치 직후 대응)
-    fm.fontManager.__init__()
+
+    # 2) Windows / macOS — 시스템 폰트 검색
     for _fname in fm.findSystemFonts():
-        if any(k in _fname for k in keywords):
-            matplotlib.rc('font', family=fm.FontProperties(fname=_fname).get_name())
+        if any(k in _fname for k in ['Malgun', 'malgun', 'NanumGothic', 'Nanum', 'AppleGothic']):
+            fm.fontManager.addfont(_fname)
+            prop = fm.FontProperties(fname=_fname)
+            matplotlib.rc('font', family=prop.get_name())
             return
 
 _set_korean_font()
