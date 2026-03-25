@@ -197,9 +197,11 @@ with tab1:
 # ─────────────────────────────────────────────
 with tab2:
     st.subheader('처방 비교')
+    _default_a = all_names.index('향사평위산') if '향사평위산' in all_names else 0
+    _default_b = all_names.index('불환금정기산') if '불환금정기산' in all_names else 1
     col1, col2 = st.columns(2)
     with col1:
-        name_a = st.selectbox('처방 A', all_names, key='tab2_a')
+        name_a = st.selectbox('처방 A', all_names, index=_default_a, key='tab2_a')
         _id_a = id_map.get(name_a)
         if _id_a and _id_a in df.index:
             _ra = df.loc[_id_a]
@@ -208,7 +210,7 @@ with tab2:
                 st.caption(', '.join(f"{h['name_cn']} {h['dose_g']}g" for h in _ra['composition']))
                 st.caption(f"증상: {', '.join(_ra['indications']['symptoms'])}")
     with col2:
-        name_b = st.selectbox('처방 B', all_names, index=1, key='tab2_b')
+        name_b = st.selectbox('처방 B', all_names, index=_default_b, key='tab2_b')
         _id_b = id_map.get(name_b)
         if _id_b and _id_b in df.index:
             _rb = df.loc[_id_b]
