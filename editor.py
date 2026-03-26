@@ -12,7 +12,6 @@ import streamlit as st
 
 BASE      = Path(__file__).parent
 DATA_PATH = BASE / 'data' / 'formulas_bangyak.json'
-
 SECTION_MAP = {'U': '上統', 'M': '中統', 'L': '下統'}
 
 
@@ -36,7 +35,6 @@ def detect_issues(raw_data, chk_no_herb, chk_no_sym, chk_low_dose, chk_high_dose
         raw   = fo['indications']['raw']
         total = fo['total_dose_g']
         flags = []
-
         if chk_no_herb and len(comp) == 0:
             flags.append('약재 없음')
         if chk_no_sym and syms and syms[0] == raw[:40]:
@@ -45,12 +43,10 @@ def detect_issues(raw_data, chk_no_herb, chk_no_sym, chk_low_dose, chk_high_dose
             flags.append(f'총량 {total}g 낮음')
         if chk_high_dose and total > 500:
             flags.append(f'총량 {total}g 높음')
-
         if flags:
             issues.append({
                 'formula_id': fid,
                 '처방명': fo['name_kr'],
-                '통': get_section(fid),
                 '약재수': len(comp),
                 '총량(g)': total,
                 '증상': ', '.join(syms[:3]),
@@ -62,6 +58,37 @@ def detect_issues(raw_data, chk_no_herb, chk_no_sym, chk_low_dose, chk_high_dose
 
 # ── 페이지 설정
 st.set_page_config(page_title='처방 편집기 (로컬)', layout='wide')
+
+# ── 공통 CSS
+st.markdown("""
+<style>
+/* 처방 목록 리스트 아이템 */
+.formula-item {
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 2px;
+    line-height: 1.4;
+    text-align: left;
+}
+.formula-item:hover { background: #f0f2f6; }
+.formula-item.selected { background: #e8f0fe; }
+.formula-item .name-kr { font-size: 14px; font-weight: 600; color: #111; }
+.formula-item .meta    { font-size: 11px; color: #888; margin-top: 1px; }
+
+/* 가운데 정보 패널 */
+.info-name { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 2px; }
+.info-meta { font-size: 12px; color: #888; margin-bottom: 12px; }
+.info-label { font-size: 12px; font-weight: 600; color: #444;
+              text-transform: uppercase; letter-spacing: 0.05em;
+              margin-top: 14px; margin-bottom: 4px; }
+.info-value { font-size: 13px; color: #222; line-height: 1.6; }
+
+/* 전체 좌측정렬 */
+div[data-testid="stMarkdownContainer"] { text-align: left !important; }
+</style>
+""", unsafe_allow_html=True)
+
 st.title('방약합편 처방 편집기')
 st.caption('로컬 전용 — formulas_bangyak.json 직접 수정')
 
@@ -83,7 +110,6 @@ with tab1:
     if st.button('탐지', key='detect_btn', type='primary'):
         raw_data = load_raw()
         issues = detect_issues(raw_data, t1_no_herb, t1_no_sym, t1_low_dose, t1_high_dose)
-
         if issues:
             issue_df = pd.DataFrame(issues)
             st.warning(f'총 {len(issue_df)}개 처방에서 이슈 발견')
@@ -99,13 +125,12 @@ with tab1:
 # Tab 2: 처방 편집기
 # ─────────────────────────────────────────────
 with tab2:
-    st.subheader('처방 편집기')
-
     raw_data  = load_raw()
     name_map  = {fo['formula_id']: fo['name_kr'] for fo in raw_data}
-    id_map    = {v: k for k, v in name_map.items()}
+    cn_map    = {fo['formula_id']: fo['name_cn'] for fo in raw_data}
+    clause_map = {fo['formula_id']: fo.get('source_clause', '') for fo in raw_data}
 
-    # ── 탐지 조건 (접기)
+    # ── 탐지 조건 expander
     with st.expander('탐지 조건', expanded=False):
         cc1, cc2, cc3, cc4 = st.columns(4)
         t2_no_herb   = cc1.checkbox('약재 없음 (0종)', value=True, key='t2_herb')
@@ -125,46 +150,54 @@ with tab2:
         help='탐지 조건을 열어 탐지를 먼저 실행하세요.',
     )
 
-    if use_issue and issue_ids:
-        target_ids = [fid for fid in issue_ids if fid in name_map]
-    else:
-        target_ids = list(name_map.keys())
+    target_ids = [fid for fid in issue_ids if fid in name_map] if (use_issue and issue_ids) \
+                 else list(name_map.keys())
 
     # ── 3단 레이아웃
     col_list, col_info, col_edit = st.columns([1, 1, 2])
 
-    # ── 좌측: 처방 목록 (전화번호부 스타일)
+    # ── 좌측: 처방 목록
     with col_list:
-        st.markdown('**처방 목록**')
-
-        # 통 필터
         sec_opts = ['전체', '上統', '中統', '下統']
-        sec_sel  = st.radio('통', sec_opts, horizontal=True, key='list_sec')
-
-        # 검색
-        search = st.text_input('검색', placeholder='처방명 입력...', key='list_search',
+        sec_sel  = st.radio('통', sec_opts, horizontal=True, key='list_sec',
+                            label_visibility='collapsed')
+        search = st.text_input('검색', placeholder='처방명 검색...', key='list_search',
                                label_visibility='collapsed')
 
-        # 필터링
         filtered = []
         for fid in target_ids:
-            name = name_map[fid]
-            sec  = get_section(fid)
-            if sec_sel != '전체' and sec != sec_sel:
+            if sec_sel != '전체' and get_section(fid) != sec_sel:
                 continue
-            if search and search not in name:
+            if search and search not in name_map[fid]:
                 continue
-            filtered.append((fid, name, sec))
+            filtered.append(fid)
 
-        # 선택 상태
-        if 'selected_id' not in st.session_state:
-            st.session_state['selected_id'] = filtered[0][0] if filtered else None
+        if 'selected_id' not in st.session_state or \
+           st.session_state['selected_id'] not in [f for f in filtered]:
+            st.session_state['selected_id'] = filtered[0] if filtered else None
 
         st.caption(f'{len(filtered)}개')
-        for fid, name, sec in filtered:
-            is_selected = (st.session_state['selected_id'] == fid)
-            label = f"{'▶ ' if is_selected else ''}{name}"
-            if st.button(label, key=f'btn_{fid}', use_container_width=True):
+
+        for fid in filtered:
+            is_sel  = (st.session_state['selected_id'] == fid)
+            bg      = '#e8f0fe' if is_sel else 'transparent'
+            name_kr = name_map[fid]
+            name_cn = cn_map[fid]
+            clause  = clause_map[fid]
+            # 번호만 추출 (예: '上統 12' → '12')
+            num     = clause.split()[-1] if clause else ''
+
+            st.markdown(
+                f"""<div class="formula-item {'selected' if is_sel else ''}"
+                     style="background:{bg}">
+                  <div class="name-kr">{name_kr}</div>
+                  <div class="meta">{name_cn} &nbsp;·&nbsp; {num}</div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+            # 투명 버튼으로 클릭 감지 (absolute overlay 대신 작은 버튼)
+            if st.button('선택', key=f'sel_{fid}', use_container_width=True,
+                         help=name_kr):
                 st.session_state['selected_id'] = fid
                 st.rerun()
 
@@ -174,50 +207,62 @@ with tab2:
     # ── 가운데: 현재 처방 정보
     with col_info:
         if fo:
-            st.markdown(f"**{fo['name_kr']}**")
-            st.caption(f"{fo['name_cn']} / {fo.get('source_clause', '')} / {get_section(edit_id)}")
+            clause_str = fo.get('source_clause', '')
+            num_str    = clause_str.split()[-1] if clause_str else ''
+            st.markdown(
+                f'<div class="info-name">{fo["name_kr"]}</div>'
+                f'<div class="info-meta">{fo["name_cn"]} &nbsp;·&nbsp; {num_str}</div>',
+                unsafe_allow_html=True,
+            )
             st.divider()
-            st.markdown('**약재 구성**')
+
+            st.markdown('<div class="info-label">약재 구성</div>', unsafe_allow_html=True)
             if fo['composition']:
                 rows = [{'약재': h['name_cn'], '용량(g)': h['dose_g'],
                          '비율': f"{h.get('dose_ratio', 0):.3f}"}
                         for h in fo['composition']]
                 st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
             else:
-                st.caption('(약재 없음)')
-            st.markdown('**주치 원문**')
-            st.caption(fo['indications'].get('raw', ''))
-            st.markdown('**증상 키워드**')
-            st.caption(', '.join(fo['indications'].get('symptoms', [])) or '(없음)')
+                st.markdown('<div class="info-value">(약재 없음)</div>', unsafe_allow_html=True)
+
+            st.markdown('<div class="info-label">주치 원문</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="info-value">{fo["indications"].get("raw", "")}</div>',
+                unsafe_allow_html=True,
+            )
+
+            st.markdown('<div class="info-label">증상 키워드</div>', unsafe_allow_html=True)
+            syms_str = ', '.join(fo['indications'].get('symptoms', [])) or '(없음)'
+            st.markdown(f'<div class="info-value">{syms_str}</div>', unsafe_allow_html=True)
         else:
             st.caption('좌측에서 처방을 선택하세요.')
 
     # ── 우측: 편집 폼
     with col_edit:
         if fo:
-            st.markdown('**편집**')
-            st.divider()
-
-            st.markdown('약재 목록 — 한 줄에 `약재명 용량` (예: `甘草 4`)')
+            st.markdown('<div class="info-label">약재 목록</div>', unsafe_allow_html=True)
+            st.caption('한 줄에 `약재명 용량` 형식 (예: 甘草 4)')
             herb_default = '\n'.join(
                 f"{h['name_cn']} {h['dose_g']}" for h in fo['composition']
             )
             herb_input = st.text_area('약재 목록', value=herb_default,
-                                      height=220, key=f'herb_{edit_id}',
+                                      height=200, key=f'herb_{edit_id}',
                                       label_visibility='collapsed')
 
-            st.markdown('증상 키워드 — 쉼표로 구분')
+            st.markdown('<div class="info-label">증상 키워드</div>', unsafe_allow_html=True)
+            st.caption('쉼표로 구분')
             sym_input = st.text_input('증상 키워드',
                                       value=', '.join(fo['indications'].get('symptoms', [])),
                                       key=f'sym_{edit_id}',
                                       label_visibility='collapsed')
 
-            st.markdown('주치 원문')
+            st.markdown('<div class="info-label">주치 원문</div>', unsafe_allow_html=True)
             raw_input = st.text_input('주치 원문',
                                       value=fo['indications'].get('raw', ''),
                                       key=f'raw_{edit_id}',
                                       label_visibility='collapsed')
 
+            st.write('')
             if st.button('저장', key='edit_save', type='primary'):
                 new_comp = []
                 for line in herb_input.strip().splitlines():
