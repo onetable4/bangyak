@@ -4,7 +4,6 @@
 """
 
 import json
-import os
 from pathlib import Path
 
 import pandas as pd
@@ -59,43 +58,14 @@ def detect_issues(raw_data, chk_no_herb, chk_no_sym, chk_low_dose, chk_high_dose
 # ── 페이지 설정
 st.set_page_config(page_title='처방 편집기 (로컬)', layout='wide')
 
-# ── 공통 CSS
 st.markdown("""
 <style>
-/* 처방 목록 — 버튼을 리스트 아이템처럼 */
-div[data-testid="stButton"] > button[kind="secondary"] {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 8px 10px !important;
-    border-radius: 6px !important;
-    text-align: left !important;
-    width: 100% !important;
-    display: block !important;
-    font-size: 14px !important;
-    color: #111 !important;
-    cursor: pointer !important;
-    margin-bottom: 1px !important;
-    line-height: 1.4 !important;
-    white-space: normal !important;
-}
-div[data-testid="stButton"] > button[kind="secondary"]:hover {
-    background: #f0f2f6 !important;
-    border: none !important;
-}
-.formula-item .name-kr { font-size: 14px; font-weight: 600; color: #111; }
-.formula-item .meta    { font-size: 11px; color: #888; margin-top: 1px; }
-
-/* 가운데 정보 패널 */
-.info-name { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 2px; }
-.info-meta { font-size: 12px; color: #888; margin-bottom: 12px; }
-.info-label { font-size: 12px; font-weight: 600; color: #444;
+.info-name  { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 2px; }
+.info-meta  { font-size: 12px; color: #888; margin-bottom: 12px; }
+.info-label { font-size: 11px; font-weight: 600; color: #555;
               text-transform: uppercase; letter-spacing: 0.05em;
               margin-top: 14px; margin-bottom: 4px; }
 .info-value { font-size: 13px; color: #222; line-height: 1.6; }
-
-/* 전체 좌측정렬 */
-div[data-testid="stMarkdownContainer"] { text-align: left !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -123,7 +93,7 @@ with tab1:
         if issues:
             issue_df = pd.DataFrame(issues)
             st.warning(f'총 {len(issue_df)}개 처방에서 이슈 발견')
-            st.dataframe(issue_df, use_container_width=True, hide_index=True,
+            st.dataframe(issue_df, width='stretch', hide_index=True,
                          height=35 * (len(issue_df) + 1) + 10)
             st.session_state['issue_ids'] = [r['formula_id'] for r in issues]
         else:
@@ -135,12 +105,12 @@ with tab1:
 # Tab 2: 처방 편집기
 # ─────────────────────────────────────────────
 with tab2:
-    raw_data  = load_raw()
-    name_map  = {fo['formula_id']: fo['name_kr'] for fo in raw_data}
-    cn_map    = {fo['formula_id']: fo['name_cn'] for fo in raw_data}
+    raw_data   = load_raw()
+    name_map   = {fo['formula_id']: fo['name_kr'] for fo in raw_data}
+    cn_map     = {fo['formula_id']: fo['name_cn'] for fo in raw_data}
     clause_map = {fo['formula_id']: fo.get('source_clause', '') for fo in raw_data}
 
-    # ── 탐지 조건 expander
+    # ── 탐지 조건
     with st.expander('탐지 조건', expanded=False):
         cc1, cc2, cc3, cc4 = st.columns(4)
         t2_no_herb   = cc1.checkbox('약재 없음 (0종)', value=True, key='t2_herb')
@@ -166,38 +136,43 @@ with tab2:
     # ── 3단 레이아웃
     col_list, col_info, col_edit = st.columns([1, 1, 2])
 
-    # ── 좌측: 처방 목록
+    # ── 좌측: selectbox + 필터
     with col_list:
-        sec_opts = ['전체', '上統', '中統', '下統']
-        sec_sel  = st.radio('통', sec_opts, horizontal=True, key='list_sec',
-                            label_visibility='collapsed')
-        search = st.text_input('검색', placeholder='처방명 검색...', key='list_search',
-                               label_visibility='collapsed')
+        st.markdown('**처방 선택**')
 
-        filtered = []
-        for fid in target_ids:
-            if sec_sel != '전체' and get_section(fid) != sec_sel:
-                continue
-            if search and search not in name_map[fid]:
-                continue
-            filtered.append(fid)
+        sec_sel = st.radio('통', ['전체', '上統', '中統', '下統'],
+                           horizontal=True, key='list_sec',
+                           label_visibility='collapsed')
+        search  = st.text_input('검색', placeholder='처방명 검색...',
+                                key='list_search', label_visibility='collapsed')
 
-        if 'selected_id' not in st.session_state or \
-           st.session_state['selected_id'] not in [f for f in filtered]:
-            st.session_state['selected_id'] = filtered[0] if filtered else None
+        filtered = [
+            fid for fid in target_ids
+            if (sec_sel == '전체' or get_section(fid) == sec_sel)
+            and (not search or search in name_map[fid])
+        ]
+
+        # 표시 레이블: '교밀탕 (膠蜜湯 · 上統 80)'
+        options = [
+            f"{name_map[fid]}  ({cn_map[fid]} · {clause_map[fid]})"
+            for fid in filtered
+        ]
+        fid_by_label = dict(zip(options, filtered))
 
         st.caption(f'{len(filtered)}개')
 
-        for fid in filtered:
-            is_sel  = (st.session_state['selected_id'] == fid)
-            name_kr = name_map[fid]
-            name_cn = cn_map[fid]
-            clause  = clause_map[fid]   # 예: '上統 12'
-            label   = f"{name_kr}\n{name_cn}  ·  {clause}"
-            if st.button(label, key=f'sel_{fid}', use_container_width=True,
-                         type='secondary'):
-                st.session_state['selected_id'] = fid
-                st.rerun()
+        if options:
+            # 현재 선택된 처방이 목록에 있으면 유지, 없으면 첫 번째로
+            cur = st.session_state.get('selected_id')
+            cur_label = next((lbl for lbl, fid in fid_by_label.items() if fid == cur), options[0])
+            chosen = st.selectbox('처방', options,
+                                  index=options.index(cur_label),
+                                  key='formula_select',
+                                  label_visibility='collapsed')
+            st.session_state['selected_id'] = fid_by_label[chosen]
+        else:
+            st.caption('조건에 맞는 처방이 없습니다.')
+            st.session_state['selected_id'] = None
 
     edit_id = st.session_state.get('selected_id')
     fo = next((x for x in raw_data if x['formula_id'] == edit_id), None) if edit_id else None
@@ -205,10 +180,9 @@ with tab2:
     # ── 가운데: 현재 처방 정보
     with col_info:
         if fo:
-            clause_str = fo.get('source_clause', '')
             st.markdown(
                 f'<div class="info-name">{fo["name_kr"]}</div>'
-                f'<div class="info-meta">{fo["name_cn"]} &nbsp;·&nbsp; {clause_str}</div>',
+                f'<div class="info-meta">{fo["name_cn"]} &nbsp;·&nbsp; {fo.get("source_clause","")}</div>',
                 unsafe_allow_html=True,
             )
             st.divider()
@@ -218,19 +192,20 @@ with tab2:
                 rows = [{'약재': h['name_cn'], '용량(g)': h['dose_g'],
                          '비율': f"{h.get('dose_ratio', 0):.3f}"}
                         for h in fo['composition']]
-                st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+                st.dataframe(pd.DataFrame(rows), hide_index=True, width='stretch')
             else:
                 st.markdown('<div class="info-value">(약재 없음)</div>', unsafe_allow_html=True)
 
             st.markdown('<div class="info-label">주치 원문</div>', unsafe_allow_html=True)
             st.markdown(
-                f'<div class="info-value">{fo["indications"].get("raw", "")}</div>',
+                f'<div class="info-value">{fo["indications"].get("raw","")}</div>',
                 unsafe_allow_html=True,
             )
-
             st.markdown('<div class="info-label">증상 키워드</div>', unsafe_allow_html=True)
-            syms_str = ', '.join(fo['indications'].get('symptoms', [])) or '(없음)'
-            st.markdown(f'<div class="info-value">{syms_str}</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="info-value">{", ".join(fo["indications"].get("symptoms",[])) or "(없음)"}</div>',
+                unsafe_allow_html=True,
+            )
         else:
             st.caption('좌측에서 처방을 선택하세요.')
 
@@ -239,10 +214,9 @@ with tab2:
         if fo:
             st.markdown('<div class="info-label">약재 목록</div>', unsafe_allow_html=True)
             st.caption('한 줄에 `약재명 용량` 형식 (예: 甘草 4)')
-            herb_default = '\n'.join(
-                f"{h['name_cn']} {h['dose_g']}" for h in fo['composition']
-            )
-            herb_input = st.text_area('약재 목록', value=herb_default,
+            herb_input = st.text_area('약재 목록',
+                                      value='\n'.join(f"{h['name_cn']} {h['dose_g']}"
+                                                      for h in fo['composition']),
                                       height=200, key=f'herb_{edit_id}',
                                       label_visibility='collapsed')
 
