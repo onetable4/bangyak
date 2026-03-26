@@ -62,17 +62,27 @@ st.set_page_config(page_title='처방 편집기 (로컬)', layout='wide')
 # ── 공통 CSS
 st.markdown("""
 <style>
-/* 처방 목록 리스트 아이템 */
-.formula-item {
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 2px;
-    line-height: 1.4;
-    text-align: left;
+/* 처방 목록 — 버튼을 리스트 아이템처럼 */
+div[data-testid="stButton"] > button[kind="secondary"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 8px 10px !important;
+    border-radius: 6px !important;
+    text-align: left !important;
+    width: 100% !important;
+    display: block !important;
+    font-size: 14px !important;
+    color: #111 !important;
+    cursor: pointer !important;
+    margin-bottom: 1px !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
 }
-.formula-item:hover { background: #f0f2f6; }
-.formula-item.selected { background: #e8f0fe; }
+div[data-testid="stButton"] > button[kind="secondary"]:hover {
+    background: #f0f2f6 !important;
+    border: none !important;
+}
 .formula-item .name-kr { font-size: 14px; font-weight: 600; color: #111; }
 .formula-item .meta    { font-size: 11px; color: #888; margin-top: 1px; }
 
@@ -180,24 +190,12 @@ with tab2:
 
         for fid in filtered:
             is_sel  = (st.session_state['selected_id'] == fid)
-            bg      = '#e8f0fe' if is_sel else 'transparent'
             name_kr = name_map[fid]
             name_cn = cn_map[fid]
-            clause  = clause_map[fid]
-            # 번호만 추출 (예: '上統 12' → '12')
-            num     = clause.split()[-1] if clause else ''
-
-            st.markdown(
-                f"""<div class="formula-item {'selected' if is_sel else ''}"
-                     style="background:{bg}">
-                  <div class="name-kr">{name_kr}</div>
-                  <div class="meta">{name_cn} &nbsp;·&nbsp; {num}</div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
-            # 투명 버튼으로 클릭 감지 (absolute overlay 대신 작은 버튼)
-            if st.button('선택', key=f'sel_{fid}', use_container_width=True,
-                         help=name_kr):
+            clause  = clause_map[fid]   # 예: '上統 12'
+            label   = f"{name_kr}\n{name_cn}  ·  {clause}"
+            if st.button(label, key=f'sel_{fid}', use_container_width=True,
+                         type='secondary'):
                 st.session_state['selected_id'] = fid
                 st.rerun()
 
@@ -208,10 +206,9 @@ with tab2:
     with col_info:
         if fo:
             clause_str = fo.get('source_clause', '')
-            num_str    = clause_str.split()[-1] if clause_str else ''
             st.markdown(
                 f'<div class="info-name">{fo["name_kr"]}</div>'
-                f'<div class="info-meta">{fo["name_cn"]} &nbsp;·&nbsp; {num_str}</div>',
+                f'<div class="info-meta">{fo["name_cn"]} &nbsp;·&nbsp; {clause_str}</div>',
                 unsafe_allow_html=True,
             )
             st.divider()
