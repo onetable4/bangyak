@@ -108,7 +108,10 @@ st.caption(
     f'下統 {(df.section=="下統").sum()} — 총 {len(df)}개 처방'
 )
 
-tab1, tab2, tab3, tab4 = st.tabs(['🔍 유사 처방 검색', '⚖️ 처방 비교', '🗺️ 히트맵', '🏆 유사도 TOP 쌍'])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    '🔍 유사 처방 검색', '⚖️ 처방 비교', '🗺️ 히트맵', '🏆 유사도 TOP 쌍',
+    '⚠️ 이상 처방 탐지', '✏️ 처방 편집',
+])
 
 
 # ─────────────────────────────────────────────
@@ -456,3 +459,148 @@ with tab4:
             plt.tight_layout()
             st.pyplot(fig)
             plt.close()
+
+
+# ─────────────────────────────────────────────
+# Tab 5: 이상 처방 탐지
+# ─────────────────────────────────────────────
+with tab5:
+    st.subheader('이상 처방 탐지')
+    st.caption('약재 누락, 증상 미매핑, 용량 이상치 등 보완이 필요한 처방을 필터링합니다.')
+
+    # 탐지 기준 선택
+    c1, c2, c3, c4 = st.columns(4)
+    chk_no_herb   = c1.checkbox('약재 없음 (0종)', value=True)
+    chk_no_sym    = c2.checkbox('증상 미매핑 (원문 그대로)', value=True)
+    chk_low_dose  = c3.checkbox('총량 이상 (< 10g)', value=True)
+    chk_high_dose = c4.checkbox('총량 이상 (> 500g)', value=True)
+
+    issues = []
+    for fid, row in df.iterrows():
+        flags = []
+        comp = row['composition']
+        syms = row['indications']['symptoms']
+        raw  = row['indications']['raw']
+        total = row['total_dose_g']
+
+        if chk_no_herb and len(comp) == 0:
+            flags.append('약재 없음')
+        if chk_no_sym and syms and syms[0] == raw[:40]:
+            flags.append('증상 미매핑')
+        if chk_low_dose and 0 < total < 10:
+            flags.append(f'총량 {total}g (낮음)')
+        if chk_high_dose and total > 500:
+            flags.append(f'총량 {total}g (높음)')
+
+        if flags:
+            issues.append({
+                'formula_id': fid,
+                '처방명': row['name_kr'],
+                '통': row['section'],
+                '약재수': len(comp),
+                '총량(g)': total,
+                '증상': ', '.join(syms[:3]),
+                '주치원문': raw[:60],
+                '이슈': ' / '.join(flags),
+            })
+
+    if issues:
+        issue_df = pd.DataFrame(issues)
+        st.warning(f'총 {len(issue_df)}개 처방에서 이슈 발견')
+        st.dataframe(issue_df, use_container_width=True, hide_index=True,
+                     height=35 * (len(issue_df) + 1) + 10)
+
+        # 통별 이슈 분포
+        fig, ax = plt.subplots(figsize=(6, 3))
+        issue_df['통'].value_counts().plot.bar(ax=ax, color='tomato', edgecolor='white')
+        ax.set_title('통별 이슈 처방 수')
+        ax.set_xlabel('')
+        ax.set_ylabel('처방 수')
+        plt.tight_layout()
+        st.pyplot(fig)
+        plt.close()
+    else:
+        st.success('이슈 없음')
+
+
+# ─────────────────────────────────────────────
+# Tab 6: 처방 편집기
+# ─────────────────────────────────────────────
+with tab6:
+    st.subheader('처방 편집기')
+    st.caption('처방을 선택해 약재 구성·증상 키워드를 수정하고 JSON에 저장합니다.')
+
+    DATA_PATH = BASE / 'data' / 'formulas_bangyak.json'
+
+    # 편집할 처방 선택
+    edit_name = st.selectbox('편집할 처방 선택', all_names, key='edit_select')
+    edit_id   = id_map.get(edit_name)
+
+    if edit_id:
+        # 최신 JSON 직접 읽기 (캐시 우회)
+        with open(DATA_PATH, encoding='utf-8') as f:
+            raw_data = json.load(f)
+        formula_list = {fo['formula_id']: fo for fo in raw_data}
+        fo = formula_list.get(edit_id, {})
+
+        st.divider()
+        col_info, col_edit = st.columns([1, 2])
+
+        with col_info:
+            st.markdown(f"**{fo.get('name_kr')} ({fo.get('name_cn')})**")
+            st.caption(fo.get('source_clause', ''))
+            st.markdown('**현재 약재 구성**')
+            for h in fo.get('composition', []):
+                st.text(f"  {h['name_cn']}  {h['dose_g']}g  (비율 {h.get('dose_ratio', 0):.3f})")
+            st.markdown('**현재 주치 원문**')
+            st.caption(fo.get('indications', {}).get('raw', ''))
+
+        with col_edit:
+            st.markdown('**약재 편집** (한 줄에 `약재명 용량g`, 예: `甘草 4`)')
+            herb_text_default = '\n'.join(
+                f"{h['name_cn']} {h['dose_g']}"
+                for h in fo.get('composition', [])
+            )
+            herb_input = st.text_area('약재 목록', value=herb_text_default,
+                                      height=200, key='edit_herbs')
+
+            st.markdown('**증상 키워드 편집** (쉼표로 구분)')
+            sym_default = ', '.join(fo.get('indications', {}).get('symptoms', []))
+            sym_input = st.text_input('증상 키워드', value=sym_default, key='edit_syms')
+
+            if st.button('저장', key='edit_save', type='primary'):
+                # 약재 파싱
+                new_comp = []
+                for line in herb_input.strip().splitlines():
+                    line = line.strip()
+                    if not line:
+                        continue
+                    parts = line.rsplit(' ', 1)
+                    if len(parts) == 2:
+                        try:
+                            dose = float(parts[1].replace('g', ''))
+                            new_comp.append({'name_cn': parts[0].strip(), 'dose_g': dose})
+                        except ValueError:
+                            st.warning(f'용량 파싱 실패: {line}')
+                            continue
+
+                total = sum(h['dose_g'] for h in new_comp)
+                for h in new_comp:
+                    h['dose_ratio'] = round(h['dose_g'] / total, 4) if total > 0 else 0
+
+                # 증상 파싱
+                new_syms = [s.strip() for s in sym_input.split(',') if s.strip()]
+
+                # JSON 업데이트
+                for fo_item in raw_data:
+                    if fo_item['formula_id'] == edit_id:
+                        fo_item['composition']          = new_comp
+                        fo_item['total_dose_g']         = round(total, 1)
+                        fo_item['indications']['symptoms'] = new_syms
+                        break
+
+                with open(DATA_PATH, 'w', encoding='utf-8') as f:
+                    json.dump(raw_data, f, ensure_ascii=False, indent=2)
+
+                st.success(f'{edit_name} 저장 완료 — 약재 {len(new_comp)}종, 총량 {round(total,1)}g')
+                st.cache_data.clear()  # 캐시 초기화해서 다음 분석에 반영
